@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Ксения Ильиных](https://up.htmlacademy.ru/javascript/8/user/351319).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Ермаков](https://htmlacademy.ru/profile/id195904).
 
 ---
 
