@@ -54,10 +54,10 @@ price.addEventListener('change', function () {
   type.value = getHouseTypeByPrice(price);
 });
 
-function getHouseTypeByPrice(price) {
-  if (price.value < 1000) {
+function getHouseTypeByPrice(priceOfHouse) {
+  if (priceOfHouse.value < 1000) {
     return 'Лачуга';
-  } else if (price.value < 10000) {
+  } else if (priceOfHouse.value < 10000) {
     return 'Квартира';
   } else {
     return 'Дворец';
