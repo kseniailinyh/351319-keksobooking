@@ -51,13 +51,13 @@ function syncTime(select1, select2) {
 
 // если менятся цена, получаем для нее тип жилья
 price.addEventListener('change', function () {
-  type.value = getHouseTypeByPrice(price);
+  type.value = getHouseTypeByPrice(price.value);
 });
 
 function getHouseTypeByPrice(priceOfHouse) {
-  if (priceOfHouse.value < 1000) {
+  if (priceOfHouse < 1000) {
     return 'Лачуга';
-  } else if (priceOfHouse.value < 10000) {
+  } else if (priceOfHouse < 10000) {
     return 'Квартира';
   } else {
     return 'Дворец';
