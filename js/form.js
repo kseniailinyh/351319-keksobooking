@@ -3,32 +3,35 @@
 var pins = document.querySelectorAll('.pin');
 var dialog = document.querySelector('.dialog');
 var dialogClose = dialog.querySelector('.dialog__close');
+var map = document.querySelector('.tokyo__pin-map');
 var ENTER_KEY_CODE = 13;
 var ESC_KEY_CODE = 27;
 
-(function initPinClicks() {
-  // навешиваем каждому пину событие по клику и по нажатию enter
-  for (var i = 0; i < pins.length; i++) {
-    pins[i].addEventListener('click', function (pin) {
-      return function () {
-        initPinEvent(pin);
-      };
-    }(pins[i])
-    );
 
-    pins[i].addEventListener('keydown', function (pin, evt) {
-      return function () {
-        alert('ok');
-        if (isActivateEvent(evt)) {
-          initPinEvent(pin);
-        }
-      };
-    }(pins[i])
-    );
+map.addEventListener('click', function (evt) {
+  var target = evt.target;
+  while (target !== map) {
+    if (target.classList.contains('pin')) {
+      activatePin(target);
+      return;
+    }
+    target = target.parentNode;
   }
-})();
+});
 
-function initPinEvent(activePin) {
+map.addEventListener('keydown', function (evt) {
+  var target = evt.target;
+  while (target !== map) {
+    if (target.classList.contains('pin') && isActivateEvent(evt)) {
+      activatePin(target);
+      return;
+    }
+    target = target.parentNode;
+  }
+});
+
+// сначала удаляем у всех pin--active, показываем диалог и добавляем к текущему pin--active
+function activatePin(activePin) {
   removeActivePin();
   showDialog();
   activePin.classList.add('pin--active');
