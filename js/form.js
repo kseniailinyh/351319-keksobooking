@@ -7,8 +7,17 @@ var map = document.querySelector('.tokyo__pin-map');
 var ENTER_KEY_CODE = 13;
 var ESC_KEY_CODE = 27;
 
-
 map.addEventListener('click', function (evt) {
+  eventHandler(evt);
+});
+
+map.addEventListener('keydown', function (evt) {
+  if (isActivateEvent(evt)) {
+    eventHandler(evt);
+  }
+});
+
+function eventHandler(evt) {
   var target = evt.target;
   while (target !== map) {
     if (target.classList.contains('pin')) {
@@ -17,18 +26,7 @@ map.addEventListener('click', function (evt) {
     }
     target = target.parentNode;
   }
-});
-
-map.addEventListener('keydown', function (evt) {
-  var target = evt.target;
-  while (target !== map) {
-    if (target.classList.contains('pin') && isActivateEvent(evt)) {
-      activatePin(target);
-      return;
-    }
-    target = target.parentNode;
-  }
-});
+}
 
 // сначала удаляем у всех pin--active, показываем диалог и добавляем к текущему pin--active
 function activatePin(activePin) {
