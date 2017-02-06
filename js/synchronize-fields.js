@@ -7,6 +7,5 @@ window.synchronizeFields = function (element1, element2, array1, array2, propert
       i++;
     }
     element2[property] = array2[i];
-    console.log('ура!');
   });
 };
