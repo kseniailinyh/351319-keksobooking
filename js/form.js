@@ -30,9 +30,9 @@ var addressValidation = {
 };
 
 // навешиваем валидацию на заголовок, цену и адрес
-window.setValidation(title, titleValidation);
-window.setValidation(price, priceValidation);
-window.setValidation(address, addressValidation);
+window.setValidationRules(title, titleValidation);
+window.setValidationRules(price, priceValidation);
+window.setValidationRules(address, addressValidation);
 
 // синхронизируем время заезда и выезда
 window.synchronizeFields(time, timeout, timeValues, timeValues, 'value');
