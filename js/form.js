@@ -1,119 +1,46 @@
 'use strict';
 
-var pins = document.querySelectorAll('.pin');
-var dialog = document.querySelector('.dialog');
-var dialogClose = dialog.querySelector('.dialog__close');
-var map = document.querySelector('.tokyo__pin-map');
-var ENTER_KEY_CODE = 13;
-var ESC_KEY_CODE = 27;
-
-map.addEventListener('click', function (evt) {
-  eventHandler(evt);
-});
-
-map.addEventListener('keydown', function (evt) {
-  if (isActivateEvent(evt)) {
-    eventHandler(evt);
-  }
-});
-
-function eventHandler(evt) {
-  var target = evt.target;
-  while (target !== map) {
-    if (target.classList.contains('pin')) {
-      activatePin(target);
-      return;
-    }
-    target = target.parentNode;
-  }
-}
-
-// сначала удаляем у всех pin--active, показываем диалог и добавляем к текущему pin--active
-function activatePin(activePin) {
-  removeActivePin();
-  showDialog();
-  activePin.classList.add('pin--active');
-}
-
-// проверяем, было ли нажатие на enter
-function isActivateEvent(evt) {
-  return evt.keyCode === ENTER_KEY_CODE;
-}
-
-// если было нажатие на esc, прячем setup
-function setupKeydownHandler(evt) {
-  if (evt.keyCode === ESC_KEY_CODE) {
-    removeActivePin();
-    hideDialog();
-  }
-}
-
-function showDialog() {
-  dialog.classList.remove('invisible');
-  document.addEventListener('keydown', setupKeydownHandler);
-}
-
-function hideDialog() {
-  dialog.classList.add('invisible');
-  document.removeEventListener('keydown', setupKeydownHandler);
-}
-
-// навешиваем событие по клику на крестик
-dialogClose.addEventListener('click', function (evt) {
-  hideDialog();
-  removeActivePin();
-});
-
-// навешиваем событие по нажатию enter на крестик, когда он в фокусе
-dialogClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEY_CODE) {
-    hideDialog();
-    removeActivePin();
-  }
-});
-
-function removeActivePin() {
-  for (var i = 0; i < pins.length; i++) {
-    pins[i].classList.remove('pin--active');
-  }
-}
-
 var price = document.querySelector('#price');
 var time = document.querySelector('#time');
 var timeout = document.querySelector('#timeout');
 var type = document.querySelector('#type');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
+var title = document.querySelector('#title');
+var address = document.querySelector('#address');
 
-// при изменении значения поля time в timeout выделяется такое же и наоборот
-syncTime(time, timeout);
-syncTime(timeout, time);
+var timeValues = ['12', '13', '14'];
+var minPriceValues = ['0', '1000', '10000'];
+var typeValues = ['Лачуга', 'Квартира', 'Дворец'];
+var roomNumberValues = ['1', '2', '100'];
+var capacityValues = ['не для гостей', '3', '3'];
 
-function syncTime(select1, select2) {
-  select1.addEventListener('change', function () {
-    select2.value = select1.value;
-  });
-}
+var titleValidation = {
+  required: true,
+  minLength: 30,
+  maxLength: 100
+};
+var priceValidation = {
+  required: true,
+  min: 1000,
+  max: 1000000
+};
+var addressValidation = {
+  required: true
+};
 
-// если менятся цена, получаем для нее тип жилья
-price.addEventListener('change', function () {
-  type.value = getHouseTypeByPrice(price.value);
-});
+// навешиваем валидацию на заголовок, цену и адрес
+window.setValidationRules(title, titleValidation);
+window.setValidationRules(price, priceValidation);
+window.setValidationRules(address, addressValidation);
 
-function getHouseTypeByPrice(priceOfHouse) {
-  if (priceOfHouse < 1000) {
-    return 'Лачуга';
-  } else if (priceOfHouse < 10000) {
-    return 'Квартира';
-  } else {
-    return 'Дворец';
-  }
-}
+// синхронизируем время заезда и выезда
+window.synchronizeFields(time, timeout, timeValues, timeValues, 'value');
+window.synchronizeFields(timeout, time, timeValues, timeValues, 'value');
 
-roomNumber.addEventListener('change', function () {
-  if (roomNumber.value === '1') {
-    capacity.value = 'не для гостей';
-  } else {
-    capacity.value = '3';
-  }
-});
+// синхронизируем количество комнат и количество мест
+window.synchronizeFields(roomNumber, capacity, roomNumberValues, capacityValues, 'value');
+window.synchronizeFields(capacity, roomNumber, capacityValues, roomNumberValues, 'value');
+
+// синхронизируем тип жилья с минимальной ценой
+window.synchronizeFields(type, price, typeValues, minPriceValues, 'min');
