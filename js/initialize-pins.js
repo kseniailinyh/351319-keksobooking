@@ -6,25 +6,25 @@ window.initializePins = (function () {
 
   // навешиваем событие по клику на карту
   map.addEventListener('click', function (evt) {
-    window.utils.activatePin(evt, map);
+    window.togglePins.activatePin(evt, map);
   });
 
   // навешиваем событие по нажатию enter на карту
   map.addEventListener('keydown', function (evt) {
-    if (window.utils.isActivationEvent(evt)) {
-      window.utils.activatePin(evt, map);
+    if (window.utils.isEnterKeyCode(evt)) {
+      window.togglePins.activatePin(evt, map);
     }
   });
 
   // навешиваем событие по клику на крестик диалога
   dialogClose.addEventListener('click', function (evt) {
-    window.utils.deactivatePin();
+    window.togglePins.deactivatePin();
   });
 
   // навешиваем событие по нажатию enter на крестик диалога, когда он в фокусе
   dialogClose.addEventListener('keydown', function (evt) {
-    if (window.utils.isActivationEvent(evt)) {
-      window.utils.deactivatePin();
+    if (window.utils.isEnterKeyCode(evt)) {
+      window.togglePins.deactivatePin();
     }
   });
 
