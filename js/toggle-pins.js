@@ -6,7 +6,7 @@ window.togglePins = (function () {
 
   var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
   var ACTIVE_PIN_CLASS_NAME = 'pin--active';
-  
+
   // если нажали esc, закрываем диалог
   function deactivatePinByEsc(evt) {
     if (window.utils.isEscKeyCode(evt)) {
@@ -16,16 +16,16 @@ window.togglePins = (function () {
 
   // активируем пин
   function activatePin(evt, map) {
-  	var target = evt.target;
-      while (target !== map) {
-        if (target.classList.contains('pin')) {
-          removeActivePin();
-          showDialog();
-          target.classList.add(ACTIVE_PIN_CLASS_NAME);
-          return;
-        }
-        target = target.parentNode;
+    var target = evt.target;
+    while (target !== map) {
+      if (target.classList.contains('pin')) {
+        removeActivePin();
+        showDialog();
+        target.classList.add(ACTIVE_PIN_CLASS_NAME);
+        return;
       }
+      target = target.parentNode;
+    }
   }
 
   // деактивируем пин и закрываем диалог
