@@ -9,10 +9,10 @@ window.initializePins = (function () {
   var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
 
   // активируем пин
-  function activatePin(evt, map, onCardClose) {
+  function activatePin(evt, parent, onCardClose) {
     var target = evt.target;
 
-    while (target !== map) {
+    while (target !== parent) {
       if (target.classList.contains('pin')) {
         removeActivePin();
         window.showCard(dialog, DIALOG_VISIBILITY_CLASS_NAME, deactivatePinByEsc);
@@ -54,7 +54,7 @@ window.initializePins = (function () {
   }
 
   // ставим фокус на элемент
-  function focusOpenButton (element) {
+  function focusOpenButton(element) {
     element.focus();
   }
 
