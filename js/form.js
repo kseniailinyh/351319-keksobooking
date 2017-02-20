@@ -31,11 +31,11 @@ window.initializeForm = (function () {
   };
 
   function syncValues(element, value) {
-  	element.value = value;
+    element.value = value;
   }
 
   function syncValueWithMin(element, value) {
-  	element.min = value;
+    element.min = value;
   }
 
   // навешиваем валидацию на заголовок, цену и адрес

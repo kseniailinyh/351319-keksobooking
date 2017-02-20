@@ -6,7 +6,7 @@ window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
   var ACTIVE_PIN_CLASS_NAME = 'pin--active';
-  var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
+  // var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
   var noop = function () {};
 
   // активируем пин

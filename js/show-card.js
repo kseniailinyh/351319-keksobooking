@@ -1,20 +1,24 @@
 'use strict';
 
 window.showCard = function (element, className, func) {
-  // удаляем у элемента класс и навешиваем событие по нажатию клавиши
-  element.classList.remove(className);
-  document.addEventListener('keydown', func);
+  var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
 
-  function show(dialog, onHideCallback) {
+
+  function onHide() {
 
   }
 
-  function hide() {
-  	
+  function show(dialog, onHideCallback) {
+    dialog.classList.remove(DIALOG_VISIBILITY_CLASS_NAME);
+    document.addEventListener('keydown', func);
+  }
+
+  function hide(dialog) {
+    dialog.classList.add(DIALOG_VISIBILITY_CLASS_NAME);
   }
 
   return {
-  	show: show,
-  	hide: hide
-  }
+    show: show,
+    hide: hide
+  };
 };
