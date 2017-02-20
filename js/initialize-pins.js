@@ -7,6 +7,7 @@ window.initializePins = (function () {
   var dialog = document.querySelector('.dialog');
   var ACTIVE_PIN_CLASS_NAME = 'pin--active';
   var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
+  var noop = function () {};
 
   // активируем пин
   function activatePin(evt, parent, onCardClose) {
@@ -15,12 +16,10 @@ window.initializePins = (function () {
     while (target !== parent) {
       if (target.classList.contains('pin')) {
         removeActivePin();
-        window.showCard(dialog, DIALOG_VISIBILITY_CLASS_NAME, deactivatePinByEsc);
+        window.showCard(dialog, deactivatePinByEsc);
         target.classList.add(ACTIVE_PIN_CLASS_NAME);
         target.blur();
-        if (typeof onCardClose === 'function') {
-          onCardClose(target);
-        }
+        onCardClose(target);
         return;
       }
       target = target.parentNode;
@@ -60,7 +59,7 @@ window.initializePins = (function () {
 
   // навешиваем событие по клику на карту
   map.addEventListener('click', function (evt) {
-    activatePin(evt, map);
+    activatePin(evt, map, noop);
   });
 
   // навешиваем событие по нажатию enter на карту, возвращаем фокус
