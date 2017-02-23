@@ -6,17 +6,15 @@ window.initializePins = (function () {
   var pins = document.querySelectorAll('.pin');
   var dialog = document.querySelector('.dialog');
   var ACTIVE_PIN_CLASS_NAME = 'pin--active';
-  // var DIALOG_VISIBILITY_CLASS_NAME = 'invisible';
   var noop = function () {};
 
   // активируем пин
   function activatePin(evt, parent, onCardClose) {
     var target = evt.target;
-
     while (target !== parent) {
       if (target.classList.contains('pin')) {
         removeActivePin();
-        window.showCard(dialog, deactivatePinByEsc);
+        window.showCard.show(dialog, deactivatePinByEsc);
         target.classList.add(ACTIVE_PIN_CLASS_NAME);
         target.blur();
         onCardClose(target);
@@ -29,7 +27,7 @@ window.initializePins = (function () {
   // деактивируем пин и закрываем диалог
   function deactivatePin() {
     removeActivePin();
-    hideDialog();
+    window.showCard.hide(dialog, deactivatePinByEsc);
   }
 
   // делаем пины неактивными
@@ -37,12 +35,6 @@ window.initializePins = (function () {
     for (var i = 0; i < pins.length; i++) {
       pins[i].classList.remove(ACTIVE_PIN_CLASS_NAME);
     }
-  }
-
-  // прячем диалог, плюс убираем событие по нажатию esc
-  function hideDialog() {
-    dialog.classList.add(DIALOG_VISIBILITY_CLASS_NAME);
-    document.removeEventListener('keydown', deactivatePinByEsc);
   }
 
   // если нажали esc, закрываем диалог
